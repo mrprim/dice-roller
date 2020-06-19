@@ -1,0 +1,42 @@
+{
+  "name": "@mrprim/dice-roller",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel ./src -d ./lib & cp -r ./src/data ./lib",
+    "test": "jest /test/*"
+  },
+  "files": [
+    "/lib"
+  ],
+  "author": "Sergio Rodriguez <the.sergio.rodriguez@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/runtime": "^7.10.2",
+    "jest": "^26.0.1",
+    "standard": "^14.3.4"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrprim/dice-roller.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrprim/dice-roller/issues"
+  },
+  "homepage": "https://github.com/mrprim/dice-roller#readme",
+  "description": "A library for rolling dice.",
+  "keywords": [
+    "randomizer",
+    "rpg"
+  ]
+}
