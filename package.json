@@ -16,7 +16,14 @@
     "eslint": "^7",
     "jest": "^26",
     "neutrino": "^9.5.0",
+    "standard": "^16.0.4",
     "webpack": "^4",
     "webpack-cli": "^3"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
   }
+
 }
