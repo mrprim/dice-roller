@@ -1,4 +1,6 @@
-let rand = Math.random
+export const DEFAULT_RANDOMIZER = Math.random
+
+let rand = DEFAULT_RANDOMIZER
 
 export const overrideRandomizer = newRandom => {
   rand = newRandom
