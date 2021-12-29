@@ -1,40 +1,32 @@
 import getRand from './rand'
-import parseInput, { D } from './parseInput'
+import parseInput from './parseInput'
 
-interface RollResult {
-  total: number,
-  results: Result[]
-}
-
-interface Result {
-  mod: number,
-  d: D,
-  n: number,
-  v: number
-}
-
-const roll = (input: string | number, verbose?: boolean): number | RollResult => {
+const roll = (input: string | number, verbose?: boolean): number | RollResultDetail => {
   const instructions = parseInput('' + input)
 
-  const results = instructions.map(({ d, n, mod }) => {
-    const r: Result = { d, n, mod, v: 0 }
+  let id = 0
+  const details = instructions.reduce((final, { id: instructionId, diceType, numberOfDiceToRoll, modifier, timesToReroll }) => {
 
-    r.v = (d === 1) ? n : rollADie(d)
-    r.v = r.v * mod
+    for (let i = 0; i < timesToReroll; i++) {
+      const r: RollDetail = { id: id++, instructionId, diceType, numberOfDiceToRoll, modifier, value: 0 }
+      r.value = (diceType === 1) ? numberOfDiceToRoll : rollADie(diceType)
+      r.value = r.value * modifier
+      final.push(r)
+    }
 
-    return r
-  })
+    return final
+  }, [])
 
-  const total = results.reduce((total, r) => total + r.v, 0)
+  const total = details.reduce((total, r) => total + r.value, 0)
 
   if (verbose) {
-    return { total, results }
+    return { total, instructions, details }
   } else {
     return total
   }
 }
 
-const rollADie = (sides: D): number => {
+const rollADie = (sides: DiceTypeInput): number => {
   if (sides === 'F') {
     return Math.floor(getRand()() * 3) - 1
   }

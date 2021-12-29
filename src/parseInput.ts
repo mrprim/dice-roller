@@ -1,38 +1,31 @@
-export type D = number | 'F'
-
-interface Instruction {
-  mod: number,
-  n: number,
-  d: D
-}
-
-const parseInput = (input: string): Instruction[] => {
-  const instructions = []
+const parseInput = (input: string): RollInstruction[] => {
+  const instructions: RollInstruction[] = []
   input = input.replace(/\s/g, '')
 
   const steps = input.split(/(?=[+-])/g)
 
-  steps.forEach(step => {
+  steps.forEach((step, index) => {
     const stepMatch = /^((?<mod>[+-]){0,1}(?<input>.*)$)/.exec(step)
 
-    const mod = stepMatch?.groups?.mod === '-' ? -1 : 1
+    const modifier = stepMatch?.groups?.mod === '-' ? -1 : 1
 
-    const match = /^(?<n>\d+)(?:d(?<d>[\d%F]+)){0,1}$/.exec(stepMatch?.groups?.input)
+    const match = /^(?:(?<x>[\d]+x)){0,1}(?<n>\d+)(?:d(?<d>[\d%F]+)){0,1}$/.exec(stepMatch?.groups?.input)
 
     if (!match) {
       throw new Error('invalid syntax')
     }
 
-    const n: number = parseInt(match?.groups?.n) || 1
-    const d: D = parseD(match?.groups?.d)
+    const numberOfDiceToRoll = parseInt(match?.groups?.n) || 1
+    const diceType = parseDiceType(match?.groups?.d)
+    const timesToReroll = parseInt(match?.groups?.x) || 1
 
-    instructions.push({ n, d, mod })
+    instructions.push({ id: index, numberOfDiceToRoll, diceType, modifier, timesToReroll })
   })
 
   return instructions
 }
 
-const parseD = (d: string): D => {
+const parseDiceType = (d: string): DiceTypeInput => {
   if (d === '%') {
     return 100
   }

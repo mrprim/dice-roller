@@ -1,13 +1,11 @@
 export const DEFAULT_RANDOMIZER = Math.random
 
-type RandFunc = () => number
+let rand: Randomizer = DEFAULT_RANDOMIZER
 
-let rand: RandFunc = DEFAULT_RANDOMIZER
-
-export const overrideRandomizer = (newRandom: RandFunc): void => {
+export const overrideRandomizer = (newRandom: Randomizer): void => {
   rand = newRandom
 }
 
-export const getRand = (): RandFunc => rand
+export const getRand = (): Randomizer => rand
 
 export default getRand
