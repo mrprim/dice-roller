@@ -18,6 +18,7 @@ describe('main', () => {
     expect(d.roll('1d6-1d6')).toBe(0)
     expect(d.roll('-1d6+1d6')).toBe(0)
     expect(d.roll('1dF')).toBe(0)
+    expect(d.roll('1d6', true)).toEqual({ total: 4, results: [{ d: 6, mod: 1, n: 1, v: 4 }] })
     expect(() => d.roll('')).toThrow('invalid syntax')
     expect(() => d.roll('DOG')).toThrow('invalid syntax')
   })

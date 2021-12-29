@@ -1,6 +1,11 @@
 import getRand from './rand'
 import parseInput, { D } from './parseInput'
 
+interface RollResult {
+  total: number,
+  results: Result[]
+}
+
 interface Result {
   mod: number,
   d: D,
@@ -8,7 +13,7 @@ interface Result {
   v: number
 }
 
-const roll = (input: string | number): number => {
+const roll = (input: string | number, verbose?: boolean): number | RollResult => {
   const instructions = parseInput('' + input)
 
   const results = instructions.map(({ d, n, mod }) => {
@@ -22,7 +27,11 @@ const roll = (input: string | number): number => {
 
   const total = results.reduce((total, r) => total + r.v, 0)
 
-  return total
+  if (verbose) {
+    return { total, results }
+  } else {
+    return total
+  }
 }
 
 const rollADie = (sides: D): number => {
