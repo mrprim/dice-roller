@@ -1,4 +1,4 @@
-import * as d from '../src/index'
+import * as d from './index'
 
 const testableRandomizer = () => 0.5
 
@@ -17,17 +17,19 @@ describe('main', () => {
     expect(d.roll('1d6 + 1d6')).toBe(8)
     expect(d.roll('1d6-1d6')).toBe(0)
     expect(d.roll('-1d6+1d6')).toBe(0)
-    expect(() => d.roll()).toThrow('invalid syntax')
+    expect(d.roll('1dF')).toBe(0)
     expect(() => d.roll('')).toThrow('invalid syntax')
     expect(() => d.roll('DOG')).toThrow('invalid syntax')
   })
 
-  xit('overrideRandomizer', () => {
+  it('overrideRandomizer', () => {
     d.overrideRandomizer(() => 0)
-    expect(d.roll(6)).toBe(1)
+    expect(d.roll('1d6')).toBe(1)
+    expect(d.roll('1dF')).toBe(-1)
 
     d.overrideRandomizer(() => 1)
-    expect(d.roll(6)).toBe(7)
+    expect(d.roll('1d6')).toBe(7)
+    expect(d.roll('1dF')).toBe(2)
   })
 
   afterEach(() => {
