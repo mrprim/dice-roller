@@ -2,5 +2,5 @@ node_modules
 src
 tsconfig.json
 .gitignore
-jest.config.json
+jest.config.js
 babel.config.js
