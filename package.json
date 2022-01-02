@@ -1,6 +1,7 @@
 {
   "name": "@mrprim/dice-roller",
   "version": "1.0.8",
+  "description": "A typescript library for rolling dice using dice notation.",
   "main": "dist/index.js",
   "license": "MIT",
   "module": "src/index.ts",
@@ -24,5 +25,26 @@
     "env": [
       "jest"
     ]
-  }
+  },
+  "author": "Sergio Rodriguez",
+  "homepage": "https://github.com/mrprim/dice-roller#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrprim/dice-roller.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrprim/dice-roller/issues"
+  },
+  "keywords": [
+    "typescript",
+    "javascript",
+    "ts",
+    "js",
+    "rpg",
+    "game",
+    "random",
+    "dice",
+    "dice notation",
+    "dice roller"
+  ]
 }

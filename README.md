@@ -1,5 +1,5 @@
 # Dice Roller
-A javascript library for rolling dice using dice syntax
+A typescript library for rolling dice using dice notation.
 
 ## Installation
 
