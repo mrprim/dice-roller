@@ -1,12 +1,12 @@
 {
   "name": "@mrprim/dice-roller",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "dist/index.js",
   "license": "MIT",
   "module": "src/index.ts",
   "scripts": {
     "deploy": "yarn run build && yarn publish --access public",
-    "build": "rm -rf dist && tsc",
+    "build": "rm -rf dist && tsc && cp ./src/typings.d.ts ./dist",
     "test": "jest"
   },
   "devDependencies": {
