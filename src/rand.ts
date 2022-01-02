@@ -1,3 +1,5 @@
+type Randomizer = () => number
+
 export const DEFAULT_RANDOMIZER = Math.random
 
 let rand: Randomizer = DEFAULT_RANDOMIZER

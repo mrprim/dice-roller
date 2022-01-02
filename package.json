@@ -6,7 +6,7 @@
   "module": "src/index.ts",
   "scripts": {
     "deploy": "yarn run build && yarn publish --access public",
-    "build": "rm -rf dist && tsc && cp ./src/typings.d.ts ./dist",
+    "build": "rm -rf dist && tsc",
     "test": "jest"
   },
   "devDependencies": {

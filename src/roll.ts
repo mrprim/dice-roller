@@ -1,5 +1,21 @@
 import getRand from './rand'
-import parseInput from './parseInput'
+import parseInput, { DiceTypeInput, RollInstruction } from './parseInput'
+
+interface RollResultDetail {
+  total: number,
+  instructions: RollInstruction[],
+  details: RollDetail[]
+}
+
+interface RollDetail {
+  id: number,
+  instructionId: number,
+  modifier: number,
+  diceType: DiceTypeInput,
+  numberOfDiceToRoll: number,
+  value: number
+}
+
 
 const roll = (input: string | number, verbose?: boolean): number | RollResultDetail => {
   const instructions = parseInput('' + input)

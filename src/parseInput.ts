@@ -1,3 +1,13 @@
+export type DiceTypeInput = number | 'F'
+
+export interface RollInstruction {
+  id: number,
+  modifier: number,
+  numberOfDiceToRoll: number,
+  diceType: DiceTypeInput,
+  timesToReroll: number
+}
+
 const parseInput = (input: string): RollInstruction[] => {
   const instructions: RollInstruction[] = []
   input = input.replace(/\s/g, '')
