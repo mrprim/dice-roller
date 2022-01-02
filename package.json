@@ -5,6 +5,7 @@
   "license": "MIT",
   "module": "src/index.ts",
   "scripts": {
+    "publish": "yarn patch & yarn publish",
     "build": "rm -rf dist & tsc",
     "test": "jest"
   },
