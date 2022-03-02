@@ -12,7 +12,8 @@ interface RollDetail {
   instructionId: number,
   modifier: number,
   diceType: DiceTypeInput,
-  value: number
+  value: number,
+  discard: boolean
 }
 
 
@@ -20,22 +21,33 @@ const roll = (input: string | number, verbose?: boolean): number | RollResultDet
   const instructions = parseInput('' + input)
 
   let id = 0
-  const details = instructions.reduce((final, { id: instructionId, diceType, numberOfDiceToRoll, modifier, timesToReroll }) => {
+  const details = instructions.reduce((final, { id: instructionId, diceType, numberOfDiceToRoll, modifier, timesToReroll, numberOfHighestToKeep }) => {
 
     for (let i = 0; i < timesToReroll; i++) {
-
+      let groupResults = []
       for (let k = 0; k < (diceType === 1 ? 1 : numberOfDiceToRoll); k++) {
-        const r: RollDetail = { id: id++, instructionId, diceType, modifier, value: 0 }
+        const r: RollDetail = { id: id++, instructionId, diceType, modifier, value: 0, discard: false }
         r.value = (diceType === 1) ? numberOfDiceToRoll : rollADie(diceType)
         r.value = r.value * modifier
-        final.push(r)
+        groupResults.push(r)
       }
+
+      if (numberOfHighestToKeep) {
+        groupResults = groupResults.sort((a, b) => a.value > b.value ? 1 : -1)
+          .map((r, index) => ({ ...r, discard: index < numberOfHighestToKeep }))
+          .sort((a, b) => a.id > b.id ? 1 : -1)
+      }
+
+      console.log(groupResults)
+
+
+      final = final.concat(groupResults)
     }
 
     return final
   }, [])
 
-  const total = details.reduce((total, r) => total + r.value, 0)
+  const total = details.reduce((total, r) => r.discard ? total : (total + r.value), 0)
 
   if (verbose) {
     return { total, instructions, details }
