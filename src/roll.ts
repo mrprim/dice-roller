@@ -12,7 +12,6 @@ interface RollDetail {
   instructionId: number,
   modifier: number,
   diceType: DiceTypeInput,
-  numberOfDiceToRoll: number,
   value: number
 }
 
@@ -24,10 +23,13 @@ const roll = (input: string | number, verbose?: boolean): number | RollResultDet
   const details = instructions.reduce((final, { id: instructionId, diceType, numberOfDiceToRoll, modifier, timesToReroll }) => {
 
     for (let i = 0; i < timesToReroll; i++) {
-      const r: RollDetail = { id: id++, instructionId, diceType, numberOfDiceToRoll, modifier, value: 0 }
-      r.value = (diceType === 1) ? numberOfDiceToRoll : rollADie(diceType)
-      r.value = r.value * modifier
-      final.push(r)
+
+      for (let k = 0; k < (diceType === 1 ? 1 : numberOfDiceToRoll); k++) {
+        const r: RollDetail = { id: id++, instructionId, diceType, modifier, value: 0 }
+        r.value = (diceType === 1) ? numberOfDiceToRoll : rollADie(diceType)
+        r.value = r.value * modifier
+        final.push(r)
+      }
     }
 
     return final
