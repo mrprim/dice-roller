@@ -19,6 +19,7 @@ yarn add @mrprim/dice-roller
 import roll from '@mrprim/dice-roller'
 
 const total = roll('1d6+1d4+3')
+const details = roll('1d4-1', true) // need to update this api to take an options object
 ```
 
 ### Dice Notation
