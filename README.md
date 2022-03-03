@@ -31,7 +31,14 @@ Multiple dice notation strings can be separated by `+` or `-` to roll more than 
 #### Multiplier (Nx)
 Perform the following dice action multiple times - `2x4d10` rolls `4d10` twice.
 
+Valid values: Integer
+
 #### Dice Type (dN)
 The type of die to roll.
 
-Valid dice type values: Integer, 'F' (for Fate die), '%' (for Percentile die; equivalent to d100)
+Valid values: Integer, 'F' (for Fate die), '%' (for Percentile die; equivalent to d100)
+
+#### Keep Highest N Dice (kN)
+The number of dice to use to calculate the total of a roll, keepig those with the highest value.
+
+Valid values: Integer

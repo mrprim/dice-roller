@@ -1,6 +1,6 @@
 import roll from './roll'
-import { overrideRandomizer, DEFAULT_RANDOMIZER } from './rand'
+import { overrideRandomizer, resetRandomizer, DEFAULT_RANDOMIZER } from './rand'
 
-export { roll, overrideRandomizer, DEFAULT_RANDOMIZER }
+export { roll, overrideRandomizer, resetRandomizer, DEFAULT_RANDOMIZER }
 
 export default roll

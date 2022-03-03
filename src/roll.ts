@@ -38,9 +38,6 @@ const roll = (input: string | number, verbose?: boolean): number | RollResultDet
           .sort((a, b) => a.id > b.id ? 1 : -1)
       }
 
-      console.log(groupResults)
-
-
       final = final.concat(groupResults)
     }
 

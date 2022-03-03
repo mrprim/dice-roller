@@ -6,6 +6,16 @@ const baseInstruction = { id: 0, diceType: 1, modifier: 1, numberOfDiceToRoll: 1
 const baseDetail = { id: 0, instructionId: 0, diceType: 1, modifier: 1, value: 0, discard: false }
 
 describe('main', () => {
+  it('roll real numbers', () => {
+    d.resetRandomizer()
+
+    const result = d.roll('4d10k2', true)
+    if (typeof result !== 'number') {
+      const details = result.details.sort((a, b) => a.value > b.value ? -1 : 1)
+      expect(details[0].value + details[1].value).toEqual(result.total)
+    }
+  })
+
   it('roll', () => {
     d.overrideRandomizer(testableRandomizer)
     expect(d.roll(6)).toBe(6)
