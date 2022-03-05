@@ -16,12 +16,11 @@ interface RollDetail {
   discard: boolean
 }
 
-
 const roll = (input: string | number, verbose?: boolean): number | RollResultDetail => {
   const instructions = parseInput('' + input)
 
   let id = 0
-  const details = instructions.reduce((final, { id: instructionId, diceType, numberOfDiceToRoll, modifier, timesToReroll, numberOfHighestToKeep }) => {
+  const details = instructions.reduce((final, { id: instructionId, diceType, numberOfDiceToRoll, modifier, timesToReroll, numberOfHighestToKeep, numberOfLowestToKeep }) => {
 
     for (let i = 0; i < timesToReroll; i++) {
       let groupResults = []
@@ -32,17 +31,14 @@ const roll = (input: string | number, verbose?: boolean): number | RollResultDet
         groupResults.push(r)
       }
 
-      if (numberOfHighestToKeep) {
-        groupResults = groupResults.sort((a, b) => a.value > b.value ? 1 : -1)
-          .map((r, index) => ({ ...r, discard: index < numberOfHighestToKeep }))
-          .sort((a, b) => a.id > b.id ? 1 : -1)
-      }
+      groupResults = handleDiscards(groupResults, numberOfHighestToKeep, numberOfLowestToKeep)
 
       final = final.concat(groupResults)
     }
 
     return final
   }, [])
+
 
   const total = details.reduce((total, r) => r.discard ? total : (total + r.value), 0)
 
@@ -51,6 +47,23 @@ const roll = (input: string | number, verbose?: boolean): number | RollResultDet
   } else {
     return total
   }
+}
+
+const handleDiscards = (results: RollDetail[], kh: number, kl: number): RollDetail[] => {
+  if (!kh && !kl) return results
+
+  results = results.sort((a, b) => a.value < b.value ? -1 : 1).map(r => ({ ...r, discard: true }))
+
+  console.log('before', results)
+  if (kl) {
+    results = results.map((r, index) => ({ ...r, discard: index < kl ? false : r.discard }))
+  }
+
+  if (kh) {
+    results = results.map((r, index) => ({ ...r, discard: index >= results.length - kh ? false : r.discard }))
+  }
+
+  return results.sort((a, b) => a.id > b.id ? 1 : -1)
 }
 
 const rollADie = (sides: DiceTypeInput): number => {

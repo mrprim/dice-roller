@@ -1,7 +1,7 @@
 import parseInput, { RollInstruction } from './parseInput'
 
 const testableRandomizer = () => 0.5
-const base = { id: 0, diceType: 1, modifier: 1, numberOfDiceToRoll: 1, timesToReroll: 1, numberOfHighestToKeep: 0 }
+const base = { id: 0, diceType: 1, modifier: 1, numberOfDiceToRoll: 1, timesToReroll: 1, numberOfHighestToKeep: 0, numberOfLowestToKeep: 0 }
 
 describe('parseInput', () => {
   it('', () => {
@@ -15,6 +15,7 @@ describe('parseInput', () => {
     expect(parseInput('3x4dF')).toEqual([{ ...base, diceType: 'F', numberOfDiceToRoll: 4, timesToReroll: 3 }])
     expect(parseInput('2d6k1')).toEqual([{ ...base, diceType: 6, numberOfDiceToRoll: 2, numberOfHighestToKeep: 1 }])
     expect(parseInput('2d6k2')).toEqual([{ ...base, diceType: 6, numberOfDiceToRoll: 2, numberOfHighestToKeep: 2 }])
-    // expect(parseInput('2d6k')).toEqual([{ ...base, diceType: '6', numberOfDiceToRoll: 2, numberOfHighestToKeep: 1 }])
+    expect(parseInput('2d6kh2')).toEqual([{ ...base, diceType: 6, numberOfDiceToRoll: 2, numberOfHighestToKeep: 2 }])
+    expect(parseInput('2d6kl2')).toEqual([{ ...base, diceType: 6, numberOfDiceToRoll: 2, numberOfLowestToKeep: 2 }])
   })
 })

@@ -38,7 +38,12 @@ The type of die to roll.
 
 Valid values: Integer, 'F' (for Fate die), '%' (for Percentile die; equivalent to d100)
 
-#### Keep Highest N Dice (kN)
-The number of dice to use to calculate the total of a roll, keepig those with the highest value.
+#### Keep Highest N Dice (kN, khN)
+The number of dice to use to calculate the total of a roll, keeping those with the highest value.
+
+Valid values: Integer
+
+#### Keep Lowest N Dice (klN)
+The number of dice to use to calculate the total of a roll, keeping those with the lowest value.
 
 Valid values: Integer
