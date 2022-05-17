@@ -2,7 +2,7 @@ import * as d from './index'
 
 const testableRandomizer = () => 0.5
 
-const baseInstruction = { id: 0, diceType: 1, modifier: 1, numberOfDiceToRoll: 1, timesToReroll: 1, numberOfHighestToKeep: 0, numberOfLowestToKeep: 0 }
+const baseInstruction = { id: 0, diceType: 1, modifier: 1, numberOfDiceToRoll: 1, timesToReroll: 1, numberOfHighestToKeep: 0, numberOfLowestToKeep: 0, rerollMinValue: 0 }
 const baseDetail = { id: 0, instructionId: 0, diceType: 1, modifier: 1, value: 0, discard: false }
 
 describe('main', () => {

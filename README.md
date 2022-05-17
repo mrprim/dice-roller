@@ -47,3 +47,8 @@ Valid values: Integer
 The number of dice to use to calculate the total of a roll, keeping those with the lowest value.
 
 Valid values: Integer
+
+#### Reroll Dice Above N (! or !N)
+Dice that roll N or above are rerolled.  If N is left blank then it is set to the maximum value of the dice.
+
+Valid values: Integer

@@ -7,7 +7,8 @@ export interface RollInstruction {
   diceType: DiceTypeInput,
   timesToReroll: number,
   numberOfHighestToKeep: number,
-  numberOfLowestToKeep: number
+  numberOfLowestToKeep: number,
+  rerollMinValue: number
 }
 
 const parseInput = (input: string): RollInstruction[] => {
@@ -21,7 +22,7 @@ const parseInput = (input: string): RollInstruction[] => {
 
     const modifier = stepMatch?.groups?.mod === '-' ? -1 : 1
 
-    const match = /^(?:(?<x>[\d]+x)){0,1}(?<n>\d+)(?:d(?<d>[\d%F]+)){0,1}(?:kh{0,1}(?<kh>\d+)){0,1}(?:kl(?<kl>\d+)){0,1}$/.exec(stepMatch?.groups?.input)
+    const match = /^(?:(?<x>[\d]+x)){0,1}(?<n>\d+)(?:d(?<d>[\d%F]+)){0,1}(?:kh{0,1}(?<kh>\d+)){0,1}(?:kl(?<kl>\d+)){0,1}(?<reroll>!\d*){0,1}$/.exec(stepMatch?.groups?.input)
 
     if (!match) {
       throw new Error('invalid syntax')
@@ -32,8 +33,9 @@ const parseInput = (input: string): RollInstruction[] => {
     const timesToReroll = parseInt(match?.groups?.x) || 1
     const numberOfHighestToKeep = parseInt(match?.groups?.kh) || 0
     const numberOfLowestToKeep = parseInt(match?.groups?.kl) || 0
+    const rerollMinValue = parseReroll(match?.groups?.reroll, diceType) || 0
 
-    instructions.push({ id: index, numberOfDiceToRoll, diceType, modifier, timesToReroll, numberOfHighestToKeep, numberOfLowestToKeep })
+    instructions.push({ id: index, numberOfDiceToRoll, diceType, modifier, timesToReroll, numberOfHighestToKeep, numberOfLowestToKeep, rerollMinValue })
   })
 
   return instructions
@@ -49,6 +51,23 @@ const parseDiceType = (d: string): DiceTypeInput => {
   }
 
   return parseInt(d) || 1
+}
+
+const parseReroll = (rerollGroup: string, diceType: DiceTypeInput): number => {
+  if (!rerollGroup) {
+    return 0;
+  }
+
+  if (rerollGroup.length < 2) {
+    return getMaxValue(diceType)
+  }
+
+  return parseInt(rerollGroup.substring(1))
+}
+
+const getMaxValue = (diceType: DiceTypeInput) => {
+  if (diceType === 'F') return 1
+  return diceType
 }
 
 export default parseInput

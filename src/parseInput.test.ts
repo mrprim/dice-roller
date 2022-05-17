@@ -1,7 +1,7 @@
 import parseInput, { RollInstruction } from './parseInput'
 
 const testableRandomizer = () => 0.5
-const base = { id: 0, diceType: 1, modifier: 1, numberOfDiceToRoll: 1, timesToReroll: 1, numberOfHighestToKeep: 0, numberOfLowestToKeep: 0 }
+const base = { id: 0, diceType: 1, modifier: 1, numberOfDiceToRoll: 1, timesToReroll: 1, numberOfHighestToKeep: 0, numberOfLowestToKeep: 0, rerollMinValue: 0 }
 
 describe('parseInput', () => {
   it('', () => {
@@ -17,5 +17,9 @@ describe('parseInput', () => {
     expect(parseInput('2d6k2')).toEqual([{ ...base, diceType: 6, numberOfDiceToRoll: 2, numberOfHighestToKeep: 2 }])
     expect(parseInput('2d6kh2')).toEqual([{ ...base, diceType: 6, numberOfDiceToRoll: 2, numberOfHighestToKeep: 2 }])
     expect(parseInput('2d6kl2')).toEqual([{ ...base, diceType: 6, numberOfDiceToRoll: 2, numberOfLowestToKeep: 2 }])
+    expect(parseInput('2d6!')).toEqual([{ ...base, diceType: 6, numberOfDiceToRoll: 2, rerollMinValue: 6 }])
+    expect(parseInput('2d6!2')).toEqual([{ ...base, diceType: 6, numberOfDiceToRoll: 2, rerollMinValue: 2 }])
+    expect(parseInput('4dF!')).toEqual([{ ...base, diceType: 'F', numberOfDiceToRoll: 4, rerollMinValue: 1 }])
+    expect(parseInput('4d%!')).toEqual([{ ...base, diceType: 100, numberOfDiceToRoll: 4, rerollMinValue: 100 }])
   })
 })
